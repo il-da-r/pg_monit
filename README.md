@@ -68,4 +68,21 @@
 
 Хорошая статья про блокировки на [хабре](https://habr.com/ru/company/postgrespro/blog/462877/)
 
+3. **pg_stat_statements** дает возможность отслеживать статистику выполнения сервером всех операторов SQL  
+Для включения добавляем строку в postgresql.conf:  
+> shared_preload_libraries = ‘pg_stat_statements’  
+
+Создаем представление, необходимое для доступа к данным:  
+> CREATE EXTENSION pg_stat_statements;  
+
+20 запросов, занимающих много времени:
+> SELECT substring(query, 1, 100) AS short_query,  
+>              round(total_time::numeric, 2) AS total_time,  
+>              calls, min_time, max_time,
+>              round(mean_time::numeric, 2) AS mean  
+> FROM  pg_stat_statements 
+> ORDER BY mean DESC  
+> LIMIT 20;  
+
+percentage_cpu - процент общего времени, потраченного на один запрос
 

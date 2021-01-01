@@ -84,5 +84,3 @@
 > ORDER BY mean DESC  
 > LIMIT 20;  
 
-percentage_cpu - процент общего времени, потраченного на один запрос
-
